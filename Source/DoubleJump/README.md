@@ -1,0 +1,2 @@
+# Double Jump for Sonic Generations
+Detour helper [header]([https://github.com/blueskythlikesclouds/DllMods/blob/master/Dependencies/Helpers.h](https://github.com/blueskythlikesclouds/DllMods/blob/master/Dependencies/Helpers.h)) by [Skyth](https://github.com/blueskythlikesclouds/)
