@@ -6,6 +6,7 @@
 
 bool canJump = false;
 bool colorsJump = false;
+bool AButtonHoming = false;
 float jumpPower = 15.0f;
 float underwaterPower = 10.0f;
 
@@ -62,10 +63,13 @@ char __cdecl JumpStateHook(int* context)
 {
 	bool* stateFlags = (bool*)*(int*)(context[0x14D] + 4);
 	bool underwater = stateFlags[0x24];
-	if(context[0x3A6])
-		ChangeState(&GensString("HomingAttack"), context);
-	else if(colorsJump)
+	if (colorsJump)
 	{
+		if (context[0x3A6] && AButtonHoming)
+		{
+			ChangeState(&GensString("HomingAttack"), context);
+			return true;
+		}
 		if (underwater)
 		{
 			canJump = false;
@@ -78,6 +82,10 @@ char __cdecl JumpStateHook(int* context)
 			((float*)context)[0xA5] = jumpPower;
 			ChangeState(&GensString("Jump"), context);
 		}
+	} 
+	else if (AButtonHoming)
+	{
+		ChangeState(&GensString("HomingAttack"), context);
 	}
 	return true;
 }
@@ -94,13 +102,27 @@ __declspec(naked) void LightDashHook()
 	}
 }
 
+int IsButtonPressed = 0xD97E00;
+
 __declspec(naked) void JumpStateMidAsmHook()
 {
 	__asm
 	{
+		mov AButtonHoming, al
+		mov eax, [esi + 11Ch]
+		push edi
+		xor edi, edi
+		call [IsButtonPressed]
+		pop edi
+		test al, al
+		mov eax, 0
+		jz return
+		
 		push esi
 		call JumpStateHook
 		add esp, 4
+
+		return:
 		pop esi
 		pop ecx
 		retn 4
@@ -113,11 +135,11 @@ extern "C"
 	{
 		INSTALL_HOOK(SonicStateGrounded);
 		WRITE_JUMP(0x00DFB3F0, &LightDashHook);
-		WRITE_JUMP(0x00DFFEBA, &JumpStateMidAsmHook);
+		WRITE_JUMP(0x00DFFEA3, &JumpStateMidAsmHook);
 		INIReader reader("config.ini");
 		jumpPower = reader.GetFloat("Main", "JumpPower", jumpPower);
 		underwaterPower = reader.GetFloat("Main", "UnderwaterJumpPower", underwaterPower);
-		colorsJump = reader.GetBoolean("Main", "AButtonJump", colorsJump);
+		colorsJump = reader.GetBoolean("Main", "ColorsJump", colorsJump);
 	}
 }
 
