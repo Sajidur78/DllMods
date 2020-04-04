@@ -1,0 +1,64 @@
+{
+   "Groups":[
+      {
+         "Name":"Main",
+         "DisplayName":"Main",
+         "Elements":
+         [
+            {
+               "Name":"JumpPower",
+               "DisplayName":"Jump Power",
+               "Description":[
+                  "The power of Sonic's double jump."
+               ],
+               "Type":"float",
+               "MinValue":null,
+               "MaxValue":null,
+               "DefaultValue":15
+            },
+            {
+               "Name":"UnderwaterJumpPower",
+               "DisplayName":"Underwater Jump Power",
+               "Description":[
+                  "The power of Sonic's double jump when underwater,",
+                  "Set this to 0 to disable jumping underwater."
+               ],
+               "Type":"float",
+               "MinValue":null,
+               "MaxValue":null,
+               "DefaultValue":10
+            },
+            {
+               "Name":"ColorsJump",
+               "DisplayName":"Jump Button",
+               "Description":[
+                  "Set the button you need to press to trigger double jump.",
+               ],
+               "Type":"JumpButton",
+               "MinValue":null,
+               "MaxValue":null,
+               "DefaultValue":"A"
+            },
+         ]
+      }
+   ],
+   "Enums":{
+      "JumpButton":[
+         {
+            "DisplayName":"A Button",
+            "Value":"true",
+            "Description":[
+               "A Button",
+            ]
+         },
+         {
+            "DisplayName":"Y Button",
+            "Value":"false",
+            "Description":[
+               "Y Button",
+            ]
+         }
+      ]
+   },
+   "IniFile":"Config.ini"
+}
