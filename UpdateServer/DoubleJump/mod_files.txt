@@ -1,3 +1,4 @@
 add DoubleJump.dll
 add config.ini
 add mod.ini
+add ConfigSchema.json
