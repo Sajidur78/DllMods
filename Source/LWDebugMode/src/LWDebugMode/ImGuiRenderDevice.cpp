@@ -67,8 +67,8 @@ namespace app::imgui
 		ImVec2 max{ (float)rect.GetRight(), (float)rect.GetBottom() };
 
 		
-		ImGui::GetOverlayDrawList()->AddRectFilledMultiColor(min, max, CreateImGuiColor(color1), CreateImGuiColor(color3), 
-			CreateImGuiColor(color4), CreateImGuiColor(color2));
+		ImGui::GetOverlayDrawList()->AddRectFilledMultiColor(min, max, CreateImGuiColor(color1), CreateImGuiColor(color4), 
+			CreateImGuiColor(color2), CreateImGuiColor(color3));
 	}
 
 	void ImGuiRenderDevice::DrawLine(const Point2<int>& from, const Point2<int>& to,
