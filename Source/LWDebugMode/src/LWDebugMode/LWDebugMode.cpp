@@ -23,7 +23,7 @@ HOOK(void, __fastcall, SetupStages, ASLR(0x00913EE0), app::StageInfo::CStageInfo
 	if (res.IsValid())
 	{
 		app::game::LuaScript stgData{ nullptr };
-		stgData.Load(static_cast<const char*>(res.GetAddress()), res.GetSize());
+		stgData.Load(static_cast<const char*>(res->GetAddress()), res->GetSize());
 
 		This->ReadCategoryDebug("stage_all", stgData, 0);
 		This->ReadCategoryDebug("old_stage_all", stgData, 1);

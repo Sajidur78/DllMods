@@ -5,6 +5,7 @@
 
 namespace app::imgui
 {
+	using namespace csl::math;
 	using namespace csl::ut;
 	using namespace gindows;
 
@@ -12,7 +13,7 @@ namespace app::imgui
 	{
 		return ImColor(color.r, color.g, color.b, color.a);
 	}
-
+	
 	void ImGuiRenderDevice::DrawMouseCursor(const Point2<int>& point, const Color8& color,
 	                                     MouseCursorType type)
 	{

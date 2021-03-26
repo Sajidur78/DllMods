@@ -61,7 +61,8 @@ namespace app::dbg
 			gindows::Manager::GetInstance()->SetFont(0, new imgui::ImGuiDeviceFont(nullptr));
 			gindows::Manager::GetInstance()->SetGraphics(new imgui::ImGuiRenderDevice());
 			gindows::Manager::GetInstance()->SetMouse(new imgui::ImGuiMouse());
-			
+
+			auto* inst = gindows::Manager::GetInstance();
 			auto* backColor = gindows::Manager::GetInstance()->GetDefaultBackColorPointer();
 			backColor->a = 100;
 			
@@ -90,7 +91,7 @@ namespace app::dbg
 				m_Windows.remove(idx);
 		}
 		
-		static void FormDestroyEventHandler(gindows::Object* pControl, gindows::EventArgs& args);
+		void FormDestroyEventHandler(gindows::Object* pControl, gindows::EventArgs& args);
 		gindows::Control* CreateWindowByName(const char* pName);
 
 		gindows::Control* FindWindowByName(const char* pName) const
@@ -102,15 +103,17 @@ namespace app::dbg
 		{
 			ImGuiIO& io = ImGui::GetIO();
 
+			auto* fontMgr = csl::fnd::Singleton<font::FontManager>::GetInstance();
 			const csl::ut::Size2<int> size{static_cast<int>(io.DisplaySize.x), static_cast<int>(io.DisplaySize.y)};
-			gindows::Canvas& rCanvas = gindows::Manager::GetInstance()->GetDesktopPointer()->GetCanvas();
 			gindowsControlSetSize(gindows::Manager::GetInstance()->GetDesktopPointer(), size);
 			auto* menuMan = csl::fnd::Singleton<MenuManager>::GetInstance();
 			
 			if (menuMan && menuMan->GetSelectedMenu())
 			{
-				menuMan->GetSelectedMenu()->Draw(csl::fnd::Singleton<font::FontManager>::GetInstance()->GetDbgFont());
+				menuMan->GetSelectedMenu()->Draw(fontMgr->GetDbgFont());
 			}
+
+			fontMgr->DbgDraw();
 			
 			gindows::Manager::GetInstance()->Render();
 		}
@@ -146,44 +149,44 @@ namespace app::dbg
 			switch (vKey)
 			{
 			case VK_UP:
-				return gindows::Key::KEY_UP;
+				return (ushort)gindows::Key::KEY_UPARROW;
 
 			case VK_DOWN:
-				return gindows::Key::KEY_DOWN;
+				return (ushort)gindows::Key::KEY_DOWNARROW;
 
 			case VK_LEFT:
-				return gindows::Key::KEY_LEFT;
+				return (ushort)gindows::Key::KEY_LEFTARROW;
 
 			case VK_RIGHT:
-				return gindows::Key::KEY_RIGHT;
+				return (ushort)gindows::Key::KEY_RIGHTARROW;
 
 			case VK_RETURN:
-				return gindows::Key::KEY_RETURN;
+				return (ushort)gindows::Key::KEY_RETURN;
 
 			case VK_BACK:
-				return gindows::Key::KEY_BACK;
+				return (ushort)gindows::Key::KEY_BACKSPACE;
 
 			case VK_ESCAPE:
-				return gindows::Key::KEY_ESCAPE;
+				return (ushort)gindows::Key::KEY_ESCAPE;
 
 			case 0x30:
 			case 0x60:
-				return gindows::Key::KEY_0;
+				return (ushort)gindows::Key::KEY_0;
 				
 			default:
 				if (vKey >= 0x41 && vKey <= 0x5A)
 				{
-					return (vKey - 0x41) + gindows::Key::KEY_A;
+					return (vKey - 0x41) + (ushort)gindows::Key::KEY_A;
 				}
 
 				if (vKey >= 0x31 && vKey <= 0x39)
 				{
-					return (vKey - 0x31) + gindows::Key::KEY_1;
+					return (vKey - 0x31) + (ushort)gindows::Key::KEY_1;
 				}
 
 				if (vKey >= 0x61 && vKey <= 0x69)
 				{
-					return (vKey - 0x61) + gindows::Key::KEY_1;
+					return (vKey - 0x61) + (ushort)gindows::Key::KEY_1;
 				}
 				
 				return vKey;

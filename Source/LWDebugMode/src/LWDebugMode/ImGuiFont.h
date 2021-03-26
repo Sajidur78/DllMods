@@ -4,13 +4,13 @@
 
 namespace app::font
 {
+	using namespace csl::math;
 	class ImGuiFont : public Font
 	{
 		inline static char ms_utf8Buf[1024];
 		ImFont* m_pFont{};
 		ImU32 m_TextColor{};
 		float m_TextSize{ 5 };
-
 		
 		static const char* ShiftJisToUtf8(const char* value);
 

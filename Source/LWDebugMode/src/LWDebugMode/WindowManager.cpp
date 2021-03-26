@@ -182,7 +182,7 @@ namespace app::imgui
 		ImGui::NewFrame();
 
 		dbg::WindowManager::Render();
-
+		
 		for (auto& window : m_windows)
 		{
 			if (window->m_isVisible)
@@ -195,6 +195,8 @@ namespace app::imgui
 			}
 		}
 
+		Singleton<font::FontManager>::GetInstance()->DbgDraw();
+		
 		ImGui::EndFrame();
 		ImGui::Render();
 		ImGui_ImplDX9_RenderDrawData(ImGui::GetDrawData());

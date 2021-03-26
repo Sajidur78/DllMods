@@ -26,7 +26,7 @@ gindows::Control* app::dbg::WindowManager::CreateWindowByName(const char* pName)
 	if (!pWindow)
 		return nullptr;
 
-	pWindow->m_OnDestroy += FormDestroyEventHandler;
+	pWindow->m_OnDestroy += csl::ut::MakePair(this, &WindowManager::FormDestroyEventHandler);
 	
 	AddWindow(pWindow);
 	return pWindow;
