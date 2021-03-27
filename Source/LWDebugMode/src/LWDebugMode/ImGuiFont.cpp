@@ -24,7 +24,7 @@ namespace app::font
 		m_TextSize = size.GetX();
 
 		if (size.GetY() > size.GetX())
-			m_TextSize = sqrtf((size.x * size.x) + (size.y * size.y));
+			m_TextSize = sqrtf((size.x() * size.x()) + (size.y() * size.y()));
 	}
 
 	Vector2* ImGuiFont::GetFontSize(csl::math::Vector2* pSize)
