@@ -1,18 +1,14 @@
 #include "pch.h"
 #include "DbgWindowManager.h"
-#include "DbgWindows.h"
 
 void app::dbg::WindowManager::FormDestroyEventHandler(gindows::Object* pControl, gindows::EventArgs& args)
 {
-	if (GetInstance())
-	{
-		GetInstance()->RemoveWindow(reinterpret_cast<gindows::Control*>(pControl));
-	}
+	RemoveWindow(reinterpret_cast<gindows::Control*>(pControl));
 }
 
-gindows::Control* app::dbg::WindowManager::CreateWindowByName(const char* pName)
+gindows::Form* app::dbg::WindowManager::CreateWindowByName(const char* pName)
 {
-	gindows::Control* pWindow = FindWindowByName(pName);
+	gindows::Form* pWindow = FindWindowByName(pName);
 
 	if (pWindow)
 		return pWindow;

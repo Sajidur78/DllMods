@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "LWDebugMode.h"
 #include "DbgWindowManager.h"
+#include "SceneParametersEditWindow.h"
 
 #pragma comment(lib, "lib/detours.lib")
 #pragma comment(lib, "lib/syelog.lib")
@@ -9,6 +10,8 @@ using namespace app::imgui;
 using namespace csl::fnd;
 
 app::CGameSequence::DevData ms_DevData{};
+app::fnd::DataResource* ms_SceneResource{};
+const app::fnd::RflClass* ms_SceneClass = reinterpret_cast<const app::fnd::RflClass*>(ASLR(0x00FD9F80));
 
 HOOK(csl::fnd::IAllocator*, __cdecl, GetDebugAllocator, ASLR(0x004438B0))
 {
@@ -45,6 +48,7 @@ HOOK(void*, __fastcall, GameModeDevMenuCtor, ASLR(0x00914890), void* This)
 	if (pWindowMan)
 	{
 		pWindowMan->CreateWindowByName("DevConfig");
+		pWindowMan->CreateWindowByName("FxParamEdit");
 	}
 	
 	return originalGameModeDevMenuCtor(This);
@@ -74,8 +78,13 @@ extern "C" __declspec(dllexport) void Init()
 	char pathBuf[MAX_PATH];
 	GetCurrentDirectoryA(sizeof(pathBuf), pathBuf);
 
+	// Fix load test crashes
+	WRITE_MEMORY(ASLR(0x0092AAA6), 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90)
+	WRITE_MEMORY(ASLR(0x0092AAF6), 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90)
+	
 	WindowManager::SetCurrentDir(pathBuf);
-
+	SceneParametersEditWindow::InstallHooks();
+	
 	INSTALL_HOOK(GetDebugAllocator)
 	INSTALL_HOOK(SetupStages)
 	INSTALL_HOOK(StateDevMenu)

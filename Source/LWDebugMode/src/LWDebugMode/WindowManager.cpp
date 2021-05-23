@@ -3,6 +3,7 @@
 #include "DbgWindowManager.h"
 #include "HioServer.h"
 #include <string>
+#include <windowsx.h>
 
 #pragma once
 #pragma push_macro("SendMessage")
@@ -47,7 +48,7 @@ namespace app::imgui
 	LRESULT CALLBACK WindowManagerProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam)
 	{
 		ImGui_ImplWin32_WndProcHandler(hWnd, Msg, wParam, lParam);
-
+		
 		switch (Msg)
 		{
 		case WM_KEYDOWN:
@@ -109,13 +110,13 @@ namespace app::imgui
 
 		case WM_MOUSEMOVE:
 		{
-			dbg::WindowManager::MouseMove();
+			const csl::ut::Point2<int> point{ GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam) };
+			dbg::WindowManager::MouseMove(point);
 			break;
 		}
 
 		default:
 			break;
-
 		}
 
 		return CallWindowProc((WNDPROC)WindowManager::WndProcOriginal, hWnd, Msg, wParam, lParam);

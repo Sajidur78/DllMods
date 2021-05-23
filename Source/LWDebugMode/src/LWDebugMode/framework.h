@@ -46,3 +46,12 @@
 		memcpy((void*)location, data, sizeof(data)); \
 		VirtualProtect((void*)location, sizeof(data), oldProtect, NULL); \
 	}
+
+#define WRITE_FUNCTION(location, func)\
+	{ \
+		DWORD oldProtect; \
+		void* address = (void*)func; \
+		VirtualProtect((void*)location, sizeof(void*), PAGE_EXECUTE_READWRITE, &oldProtect); \
+		memcpy((void*)location, &address, sizeof(void*)); \
+		VirtualProtect((void*)location, sizeof(void*), oldProtect, NULL); \
+	}

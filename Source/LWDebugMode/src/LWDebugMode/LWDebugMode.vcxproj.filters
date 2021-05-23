@@ -33,9 +33,6 @@
     <ClInclude Include="ImGuiAllocator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="hhFxSceneData.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="DbgWindowManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -48,9 +45,6 @@
     <ClInclude Include="ImGuiMouse.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DbgWindows.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ImGuiRenderDevice.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -58,6 +52,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="LWDebugMode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DevConfigEditWindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneParametersEditWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -111,6 +111,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="LWDebugMode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DevConfigEditWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneParametersEditWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGuiMouse.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

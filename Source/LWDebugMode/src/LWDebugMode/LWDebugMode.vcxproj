@@ -91,11 +91,12 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;LWSCENEEDITOR_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>..\depends;..\depends\imgui;..\depends\imgui\backends;..\..\..\Depends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -160,18 +161,18 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="DbgWindowManager.h" />
-    <ClInclude Include="DbgWindows.h" />
+    <ClInclude Include="DevConfigEditWindow.h" />
     <ClInclude Include="DummyDevice.h" />
     <ClInclude Include="ImGuiDeviceFont.h" />
     <ClInclude Include="ImGuiRenderDevice.h" />
     <ClInclude Include="framework.h" />
-    <ClInclude Include="hhFxSceneData.h" />
     <ClInclude Include="HioServer.h" />
     <ClInclude Include="ImGuiAllocator.h" />
     <ClInclude Include="ImGuiFont.h" />
     <ClInclude Include="ImGuiMouse.h" />
     <ClInclude Include="LWDebugMode.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="SceneParametersEditWindow.h" />
     <ClInclude Include="WindowManager.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
@@ -184,9 +185,11 @@
     <ClCompile Include="..\depends\imgui\imgui_tables.cpp" />
     <ClCompile Include="..\depends\imgui\imgui_widgets.cpp" />
     <ClCompile Include="DbgWindowManager.cpp" />
+    <ClCompile Include="DevConfigEditWindow.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="DummyDevice.cpp" />
     <ClCompile Include="ImGuiDeviceFont.cpp" />
+    <ClCompile Include="ImGuiMouse.cpp" />
     <ClCompile Include="ImGuiRenderDevice.cpp" />
     <ClCompile Include="ImGuiFont.cpp" />
     <ClCompile Include="LWDebugMode.cpp" />
@@ -196,6 +199,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="SceneParametersEditWindow.cpp" />
     <ClCompile Include="WindowManager.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>

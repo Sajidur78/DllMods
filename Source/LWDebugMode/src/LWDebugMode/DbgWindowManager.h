@@ -6,7 +6,7 @@ namespace app::dbg
 {
 	struct WindowInitNode
 	{
-		typedef gindows::Control* __cdecl WindowInit();
+		typedef gindows::Form* __cdecl WindowInit();
 		inline static WindowInitNode* ms_pRootNode{};
 		
 		const char* m_pName{};
@@ -36,7 +36,7 @@ namespace app::dbg
 	
 	class WindowManager : public fnd::ReferencedObject, csl::fnd::SingletonPointer<WindowManager>
 	{
-		inline static FUNCTION_PTR(gindows::Control*, __thiscall, ms_fpFindWindowByName, ASLR(0x004451E0), const WindowManager* pThis, const char* pName);
+		inline static FUNCTION_PTR(gindows::Form*, __thiscall, ms_fpFindWindowByName, ASLR(0x004451E0), const WindowManager* pThis, const char* pName);
 		inline static FUNCTION_PTR(void, __thiscall, gindowsControlSetSize, ASLR(0x0096FFD0), void* pControl, const csl::ut::Size2<int>& size);
 		inline static FUNCTION_PTR(void, __thiscall, gindowsProcessMouseMove, ASLR(0x0096EF00), gindows::Manager* pManager, const csl::ut::Point2<int>& point);
 		inline static FUNCTION_PTR(void, __thiscall, gindowsProcessMouseDown, ASLR(0x0096F180), gindows::Manager* pManager, uint kind);
@@ -67,7 +67,7 @@ namespace app::dbg
 			backColor->a = 100;
 			
 			const csl::ut::Size2<int> size{ 1280, 720 };
-			gindowsControlSetSize(gindows::Manager::GetInstance()->GetDesktopPointer(), size);
+			gindows::Manager::GetInstance()->GetDesktop()->SetSize(size);
 		}
 
 		void AddWindow(gindows::Control* window)
@@ -92,9 +92,9 @@ namespace app::dbg
 		}
 		
 		void FormDestroyEventHandler(gindows::Object* pControl, gindows::EventArgs& args);
-		gindows::Control* CreateWindowByName(const char* pName);
+		gindows::Form* CreateWindowByName(const char* pName);
 
-		gindows::Control* FindWindowByName(const char* pName) const
+		gindows::Form* FindWindowByName(const char* pName) const
 		{
 			return ms_fpFindWindowByName(this, pName);
 		}
@@ -103,9 +103,10 @@ namespace app::dbg
 		{
 			ImGuiIO& io = ImGui::GetIO();
 
+			gindows::Manager::GetInstance()->Execute(io.DeltaTime);
 			auto* fontMgr = csl::fnd::Singleton<font::FontManager>::GetInstance();
 			const csl::ut::Size2<int> size{static_cast<int>(io.DisplaySize.x), static_cast<int>(io.DisplaySize.y)};
-			gindowsControlSetSize(gindows::Manager::GetInstance()->GetDesktopPointer(), size);
+			gindows::Manager::GetInstance()->GetDesktop()->SetSize(size);
 			auto* menuMan = csl::fnd::Singleton<MenuManager>::GetInstance();
 			
 			if (menuMan && menuMan->GetSelectedMenu())
@@ -118,12 +119,9 @@ namespace app::dbg
 			gindows::Manager::GetInstance()->Render();
 		}
 
-		static void MouseMove()
+		static void MouseMove(const csl::ut::Point2<int>& pos)
 		{
-			ImGuiIO& io = ImGui::GetIO();
-			const csl::ut::Point2<int> mousePoint{ static_cast<int>(io.MousePos.x), static_cast<int>(io.MousePos.y) };
-
-			gindowsProcessMouseMove(gindows::Manager::GetInstance(), mousePoint);
+			gindowsProcessMouseMove(gindows::Manager::GetInstance(), pos);
 		}
 		
 		static void MouseDown(uint kind)
@@ -161,7 +159,7 @@ namespace app::dbg
 				return (ushort)gindows::Key::KEY_RIGHTARROW;
 
 			case VK_RETURN:
-				return (ushort)gindows::Key::KEY_RETURN;
+				return (ushort)gindows::Key::KEY_ENTER;
 
 			case VK_BACK:
 				return (ushort)gindows::Key::KEY_BACKSPACE;
