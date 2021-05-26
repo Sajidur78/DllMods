@@ -23,16 +23,16 @@ namespace app::imgui
 
 	void* WindowManager::WindowManager_init()
 	{
-		auto* allocator = GlobalAllocator::GetSingletonAllocator();
+		auto* allocator = fnd::GetSingletonAllocator();
 
-		gindows::SetMemoryAllocator(GlobalAllocator::GetSingletonAllocator());
+		gindows::SetMemoryAllocator(fnd::GetSingletonAllocator());
 		gindows::Manager::Initialize();
 
-		GlobalAllocator::SetAllocator(3, GlobalAllocator::GetSingletonAllocator());
+		GlobalAllocator::SetAllocator(3, fnd::GetSingletonAllocator());
 
 		new(GetMemoryAllocator()) dbg::HioServer();
 
-		auto* mgr = new(GlobalAllocator::GetSingletonAllocator()) WindowManager();
+		auto* mgr = new(fnd::GetSingletonAllocator()) WindowManager();
 		mgr->AddRef();
 
 		return mgr;
@@ -112,6 +112,9 @@ namespace app::imgui
 		{
 			const csl::ut::Point2<int> point{ GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam) };
 			dbg::WindowManager::MouseMove(point);
+			if (gindows::Manager::GetInstance() && gindows::Manager::GetInstance()->GetMouseOverControl() != gindows::Manager::GetInstance()->GetDesktop())
+				return true;
+				
 			break;
 		}
 

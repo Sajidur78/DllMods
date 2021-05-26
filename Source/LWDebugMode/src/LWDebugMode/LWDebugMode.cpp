@@ -15,7 +15,7 @@ const app::fnd::RflClass* ms_SceneClass = reinterpret_cast<const app::fnd::RflCl
 
 HOOK(csl::fnd::IAllocator*, __cdecl, GetDebugAllocator, ASLR(0x004438B0))
 {
-	return app::game::GlobalAllocator::GetSingletonAllocator();
+	return app::fnd::GetSingletonAllocator();
 }
 
 HOOK(void, __fastcall, SetupStages, ASLR(0x00913EE0), app::StageInfo::CStageInfo* This)
@@ -46,10 +46,7 @@ HOOK(void*, __fastcall, GameModeDevMenuCtor, ASLR(0x00914890), void* This)
 	auto* pWindowMan = Singleton<app::dbg::WindowManager>::GetInstance();
 
 	if (pWindowMan)
-	{
 		pWindowMan->CreateWindowByName("DevConfig");
-		pWindowMan->CreateWindowByName("FxParamEdit");
-	}
 	
 	return originalGameModeDevMenuCtor(This);
 }
@@ -71,6 +68,10 @@ extern "C" __declspec(dllexport) void OnFrame()
 	{
 		Singleton<WindowManager>::GetInstance()->SeqGoToDevMenu();
 	}
+
+	auto* pWindowMan = Singleton<app::dbg::WindowManager>::GetInstance();
+	if ((GetAsyncKeyState(VK_F3) & 1) && pWindowMan)
+		pWindowMan->CreateWindowByName("FxParamEdit");
 }
 
 extern "C" __declspec(dllexport) void Init()

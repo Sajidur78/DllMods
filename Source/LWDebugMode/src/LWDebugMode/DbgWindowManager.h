@@ -146,6 +146,15 @@ namespace app::dbg
 		{
 			switch (vKey)
 			{
+			case VK_MENU:
+				return (ushort)gindows::Key::KEY_LEFT_ALT;
+
+			case VK_SHIFT:
+				return (ushort)gindows::Key::KEY_LEFT_SHIFT;
+
+			case VK_CONTROL:
+				return (ushort)gindows::Key::KEY_LEFT_CONTROL;
+				
 			case VK_UP:
 				return (ushort)gindows::Key::KEY_UPARROW;
 
@@ -187,13 +196,18 @@ namespace app::dbg
 					return (vKey - 0x61) + (ushort)gindows::Key::KEY_1;
 				}
 				
-				return vKey;
+				return (short)gindows::Key::KEY_INVALID;
 			}
 		}
 		
 		static void OnKeyDown(ushort vKey)
 		{
-			gindowsProcessKeyDown(gindows::Manager::GetInstance(), ToGindowsKey(vKey), false, false, false);
+			const auto key = ToGindowsKey(vKey);
+			if (key != -1)
+			{
+				gindowsProcessKeyDown(gindows::Manager::GetInstance(), key,
+					GetAsyncKeyState(VK_SHIFT), GetAsyncKeyState(VK_MENU), GetAsyncKeyState(VK_CONTROL));
+			}
 
 			const char map = MapVirtualKeyA(vKey, MAPVK_VK_TO_CHAR);
 			if (map)
@@ -204,7 +218,12 @@ namespace app::dbg
 
 		static void OnKeyUp(ushort vKey)
 		{
-			gindowsProcessKeyUp(gindows::Manager::GetInstance(), ToGindowsKey(vKey), false, false, false);
+			const auto key = ToGindowsKey(vKey);
+			if (key != -1)
+			{
+				gindowsProcessKeyUp(gindows::Manager::GetInstance(), ToGindowsKey(vKey),
+					GetAsyncKeyState(VK_SHIFT), GetAsyncKeyState(VK_MENU), GetAsyncKeyState(VK_CONTROL));
+			}
 		}
 	};
 }

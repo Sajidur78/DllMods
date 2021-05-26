@@ -12,7 +12,7 @@ namespace app::imgui
 
 		[[nodiscard]] csl::ut::Size2<int> GetSize() const override
 		{
-			return csl::ut::Size2<int>{6, 12};
+			return csl::ut::Size2<int>{12, 12};
 		}
 	};
 }

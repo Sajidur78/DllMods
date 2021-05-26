@@ -22,10 +22,19 @@ namespace app::imgui
 
 	void ImGuiRenderDevice::SetScreenBounds(const Rectangle2<int>& bound)
 	{
+		// Dumb hack to work around canvas setting the size to initialized desktop height
+		auto boundCopy = bound;
+		if (boundCopy.GetRight() == 1280 && boundCopy.GetBottom() == 720)
+		{
+			auto& io = ImGui::GetIO();
+			boundCopy.width = static_cast<int>(io.DisplaySize.x);
+			boundCopy.height = static_cast<int>(io.DisplaySize.y);
+		}
+		
 		ImGui::GetOverlayDrawList()->PopClipRect();
 		
-		const ImVec2 min{ static_cast<float>(bound.GetLeft()), static_cast<float>(bound.GetTop()) };
-		const ImVec2 max{ static_cast<float>(bound.GetRight()), static_cast<float>(bound.GetBottom()) };
+		const ImVec2 min{ static_cast<float>(boundCopy.GetLeft()), static_cast<float>(boundCopy.GetTop()) };
+		const ImVec2 max{ static_cast<float>(boundCopy.GetRight()), static_cast<float>(boundCopy.GetBottom()) };
 
 		ImGui::GetOverlayDrawList()->PushClipRect(min, max, false);
 		

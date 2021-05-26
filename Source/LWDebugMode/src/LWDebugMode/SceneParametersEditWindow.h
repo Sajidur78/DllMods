@@ -20,5 +20,9 @@ namespace app::xgame
 		
 	protected:
 		void Update(gindows::Object* pSender, gindows::ExecuteEventArgs& args) override;
+		void OnDestroy(gindows::Object*, gindows::EventArgs&);
+		void edit_KeyDown(gindows::Object* pSender, gindows::KeyEventArgs& args);
+		void OpenData();
+		void SaveData();
 	};
 }
