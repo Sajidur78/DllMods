@@ -6,6 +6,7 @@
 #include "include/detours.h"
 #include "include/detver.h"
 #include "include/syelog.h"
+#include "include/INIReader.h"
 
 #define HOOK(returnType, callingConvention, functionName, location, ...) \
     typedef returnType callingConvention functionName(__VA_ARGS__); \

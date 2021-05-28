@@ -57,7 +57,13 @@ namespace app::imgui
 			{
 				Singleton<WindowManager>::GetInstance()->SeqGoToDevMenu();
 			}
-
+			else if (wParam == VK_F3)
+			{
+				auto* pWindowMan = Singleton<dbg::WindowManager>::GetInstance();
+				if (pWindowMan)
+					pWindowMan->ToggleWindowByName("FxParamEdit");
+			}
+				
 			dbg::WindowManager::OnKeyDown(static_cast<ushort>(wParam));
 			break;
 		}

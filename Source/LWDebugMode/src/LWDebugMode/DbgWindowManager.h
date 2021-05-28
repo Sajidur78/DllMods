@@ -92,6 +92,8 @@ namespace app::dbg
 		
 		void FormDestroyEventHandler(gindows::Object* pControl, gindows::EventArgs& args);
 		gindows::Form* CreateWindowByName(const char* pName);
+		gindows::Form* ToggleWindowByName(const char* pName);
+		
 
 		gindows::Form* FindWindowByName(const char* pName) const
 		{

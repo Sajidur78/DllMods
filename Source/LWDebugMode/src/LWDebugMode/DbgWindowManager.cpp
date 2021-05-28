@@ -27,3 +27,15 @@ gindows::Form* app::dbg::WindowManager::CreateWindowByName(const char* pName)
 	AddWindow(pWindow);
 	return pWindow;
 }
+
+gindows::Form* app::dbg::WindowManager::ToggleWindowByName(const char* pName)
+{
+	auto* pWindow = FindWindowByName(pName);
+	if (pWindow)
+	{
+		delete pWindow;
+		return nullptr;
+	}
+
+	return CreateWindowByName(pName);
+}

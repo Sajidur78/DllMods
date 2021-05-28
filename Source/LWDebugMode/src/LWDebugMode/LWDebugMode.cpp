@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "LWDebugMode.h"
 #include "DbgWindowManager.h"
-#include "SceneParametersEditWindow.h"
+#include "Configuration.h"
 
 #pragma comment(lib, "lib/detours.lib")
 #pragma comment(lib, "lib/syelog.lib")
@@ -10,8 +10,7 @@ using namespace app::imgui;
 using namespace csl::fnd;
 
 app::CGameSequence::DevData ms_DevData{};
-app::fnd::DataResource* ms_SceneResource{};
-const app::fnd::RflClass* ms_SceneClass = reinterpret_cast<const app::fnd::RflClass*>(ASLR(0x00FD9F80));
+app::dev::Configuration ms_Config;
 
 static short WINAPI GetAsyncKeyStateHook(int key)
 {
@@ -76,17 +75,25 @@ extern "C" __declspec(dllexport) void OnFrame()
 	{
 		Singleton<WindowManager>::GetInstance()->SeqGoToDevMenu();
 	}
-
-	auto* pWindowMan = Singleton<app::dbg::WindowManager>::GetInstance();
-	if ((GetAsyncKeyState(VK_F3) & 1) && pWindowMan)
-		pWindowMan->CreateWindowByName("FxParamEdit");
 }
 
 extern "C" __declspec(dllexport) void Init()
 {
 	char pathBuf[MAX_PATH];
 	GetCurrentDirectoryA(sizeof(pathBuf), pathBuf);
-
+	ms_Config.Load();
+	
+	if (ms_Config.m_EnEditors)
+	{
+		// WriteNop(ASLR(0x00458351), 5);
+		// WriteNop(ASLR(0x0045835A), 5);
+		// WriteProtected<ushort>(ASLR(0x0045835A), 0xC031); // xor eax, eax
+		
+		WRITE_MEMORY(ASLR(0x00458351), 0x90, 0x90, 0x90, 0x90, 0x90);
+		WRITE_MEMORY(ASLR(0x0045835A), 0x90, 0x90, 0x90, 0x90, 0x90);
+		WRITE_MEMORY(ASLR(0x0045835A), 0x31, 0xC0);
+	}
+	
 	// Fix load test crashes
 	WRITE_MEMORY(ASLR(0x0092AAA6), 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90)
 	WRITE_MEMORY(ASLR(0x0092AAF6), 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90)

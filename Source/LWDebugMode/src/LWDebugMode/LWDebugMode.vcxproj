@@ -163,6 +163,7 @@
   <ItemGroup>
     <ClInclude Include="CommonDialog.h" />
     <ClInclude Include="CommonFileDialogWin32.h" />
+    <ClInclude Include="Configuration.h" />
     <ClInclude Include="DbgWindowManager.h" />
     <ClInclude Include="DevConfigEditWindow.h" />
     <ClInclude Include="DummyDevice.h" />
@@ -190,6 +191,7 @@
     <ClCompile Include="..\depends\imgui\imgui_tables.cpp" />
     <ClCompile Include="..\depends\imgui\imgui_widgets.cpp" />
     <ClCompile Include="CommonFileDialogWin32.cpp" />
+    <ClCompile Include="Configuration.cpp" />
     <ClCompile Include="DbgWindowManager.cpp" />
     <ClCompile Include="DevConfigEditWindow.cpp" />
     <ClCompile Include="dllmain.cpp" />
