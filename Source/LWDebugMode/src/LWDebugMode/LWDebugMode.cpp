@@ -13,6 +13,14 @@ app::CGameSequence::DevData ms_DevData{};
 app::fnd::DataResource* ms_SceneResource{};
 const app::fnd::RflClass* ms_SceneClass = reinterpret_cast<const app::fnd::RflClass*>(ASLR(0x00FD9F80));
 
+static short WINAPI GetAsyncKeyStateHook(int key)
+{
+	if (gindows::Manager::GetInstance() && gindows::Manager::GetInstance()->GetFocusControl() != gindows::Manager::GetInstance()->GetDesktop())
+		return 0;
+
+	return GetAsyncKeyState(key);
+}
+
 HOOK(csl::fnd::IAllocator*, __cdecl, GetDebugAllocator, ASLR(0x004438B0))
 {
 	return app::fnd::GetSingletonAllocator();
@@ -84,8 +92,8 @@ extern "C" __declspec(dllexport) void Init()
 	WRITE_MEMORY(ASLR(0x0092AAF6), 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90)
 	
 	WindowManager::SetCurrentDir(pathBuf);
-	SceneParametersEditWindow::InstallHooks();
-	
+
+	WRITE_FUNCTION(ASLR(0x00D52234), &GetAsyncKeyStateHook);
 	INSTALL_HOOK(GetDebugAllocator)
 	INSTALL_HOOK(SetupStages)
 	INSTALL_HOOK(StateDevMenu)

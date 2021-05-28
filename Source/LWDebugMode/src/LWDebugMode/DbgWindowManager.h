@@ -62,7 +62,6 @@ namespace app::dbg
 			gindows::Manager::GetInstance()->SetGraphics(new imgui::ImGuiRenderDevice());
 			gindows::Manager::GetInstance()->SetMouse(new imgui::ImGuiMouse());
 
-			auto* inst = gindows::Manager::GetInstance();
 			auto* backColor = gindows::Manager::GetInstance()->GetDefaultBackColorPointer();
 			backColor->a = 100;
 			

@@ -16,7 +16,6 @@ namespace app::xgame
 	public:
 		SceneParametersEditWindow();
 		static Form* Create();
-		static void InstallHooks(bool installInputBlocker = true);
 		
 	protected:
 		void Update(gindows::Object* pSender, gindows::ExecuteEventArgs& args) override;

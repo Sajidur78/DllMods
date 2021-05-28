@@ -40,7 +40,7 @@ namespace app::font
 	void ImGuiFont::DrawText(const csl::math::Vector2& pos, const char* text)
 	{
 		const ImVec2 imPos = ImVec2{ pos.GetX(), pos.GetY() };
-		
+
 		ImGui::GetOverlayDrawList()->AddText(m_pFont, m_TextSize, imPos, m_TextColor, ShiftJisToUtf8(text));
 	}
 

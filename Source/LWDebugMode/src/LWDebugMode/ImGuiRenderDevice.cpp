@@ -38,7 +38,7 @@ namespace app::imgui
 
 		ImGui::GetOverlayDrawList()->PushClipRect(min, max, false);
 		
-		m_ScreenBoundary = bound;
+		m_ScreenBoundary = boundCopy;
 	}
 
 	void ImGuiRenderDevice::DrawIcon(const Point2<int>& point, const Color8& color,
@@ -90,16 +90,18 @@ namespace app::imgui
 		ImGui::GetOverlayDrawList()->AddLine(p1, p2, CreateImGuiColor(color));
 	}
 
-	void ImGuiRenderDevice::DrawString(void* a1, const Font* font, const Rectangle2<int>& rect,
+	Point2<int> ImGuiRenderDevice::DrawString(const Font* font, const Rectangle2<int>& rect,
 		const Point2<int>& p1, const Point2<int>& p2, const Color8& color, const char* text)
 	{
 		const Vector2 pos{ static_cast<float>(p1.x + p2.x), static_cast<float>(p1.y + p2.y) };
 		const auto size = font->GetSize();
 		const Vector2 sizeVec = Vector2{static_cast<float>(size.width), static_cast<float>(size.height)};
 
+		SetScreenBounds(rect);
 		m_Font->SetTextColor(CreateImGuiColor(color));
 		m_Font->SetTextSize(sizeVec);
 		m_Font->DrawText(pos, text);
+		return { 0, 0 };
 	}
 
 	void ImGuiRenderDevice::DrawPrimitive(PrimType type, const PrimitiveVertex* a2, int a3)

@@ -9,21 +9,6 @@ using namespace app::dbg;
 using namespace app::fnd;
 using namespace csl::fnd;
 
-HOOK(void, __fastcall, FxColManagerUpdate, ASLR(0x00904E00), app::fnd::CActor* pThis, void* edx, app::fnd::SUpdateInfo& rUpdate)
-{
-	auto* pMan = static_cast<app::FxColManager*>(pThis);
-	if (!pMan->IsEditingFxParam())
-		originalFxColManagerUpdate(pThis, edx, rUpdate);
-}
-
-static short WINAPI GetAsyncKeyStateHook(int key)
-{
-	if (gindows::Manager::GetInstance() && gindows::Manager::GetInstance()->GetFocusControl() != gindows::Manager::GetInstance()->GetDesktop())
-		return 0;
-
-	return GetAsyncKeyState(key);
-}
-
 namespace app::xgame
 {
 	SceneParametersEditWindow::SceneParametersEditWindow() : FormObject(ms_pName)
@@ -49,16 +34,6 @@ namespace app::xgame
 		return new SceneParametersEditWindow();
 	}
 
-	void SceneParametersEditWindow::InstallHooks(bool installInputBlocker)
-	{
-		if (installInputBlocker)
-		{
-			WRITE_FUNCTION(ASLR(0x00D52234), &GetAsyncKeyStateHook);
-		}
-
-		INSTALL_HOOK(FxColManagerUpdate)
-	}
-
 	void SceneParametersEditWindow::Update(Object* pSender, gindows::ExecuteEventArgs& args)
 	{
 		if (!SceneParameters::GetInstance())
@@ -71,28 +46,31 @@ namespace app::xgame
 			return;
 		}
 
-		if (SceneParameters::GetInstance() && FxColManager::GetInstance() && FxColManager::GetInstance()->IsEditingFxParam())
-			SceneParameters::GetInstance()->ApplyParameter();
-
 		auto* pInst = SceneParameters::GetInstance();
 		auto* pData = pInst->GetEditingData();
-		if (!pData || pData == m_pEditingData)
-			return;
+		
+		if (pData && pData != m_pEditingData)
+		{
+			m_pEditingData = pData;
+			pInst->SetData(pData);
+			const fnd::Variant data{ pData, &FxSceneData::staticClass() };
+			m_pEditor->SetData(data);
+		}
 
-		m_pEditingData = pData;
+		if (pData)
+		{
+			if (FxColManager::GetInstance())
+				FxColManager::GetInstance()->EditingFxParam();
 
-		pInst->SetData(pData);
-		const fnd::Variant data{ pData, &FxSceneData::staticClass() };
-		m_pEditor->SetData(data);
-
-		if (FxColManager::GetInstance())
-			FxColManager::GetInstance()->ToggleEditingFxParam(true);
+			if (SceneParameters::GetInstance() && FxColManager::GetInstance() && FxColManager::GetInstance()->IsEditingFxParam())
+				SceneParameters::GetInstance()->ApplyParameter();
+		}
 	}
 
 	void SceneParametersEditWindow::OnDestroy(Object*, gindows::EventArgs&)
 	{
-		if (FxColManager::GetInstance())
-			FxColManager::GetInstance()->ToggleEditingFxParam(false);
+		//if (FxColManager::GetInstance())
+		//	FxColManager::GetInstance()->ToggleEditingFxParam(false);
 	}
 
 	void SceneParametersEditWindow::edit_KeyDown(Object* pSender, gindows::KeyEventArgs& args)
