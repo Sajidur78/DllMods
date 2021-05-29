@@ -1,4 +1,7 @@
+add DebugSchema.json
 add LWDebugMode.dll
+add README.md
+add Debug.ini
 add mod.ini
 add Fonts/DroidSans.ttf
 add Fonts/DroidSansJapanese.ttf

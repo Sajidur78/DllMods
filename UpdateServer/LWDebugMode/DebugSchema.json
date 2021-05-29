@@ -1,0 +1,22 @@
+{
+  "Groups": [
+    {
+      "Name": "Main",
+      "DisplayName": "Main",
+      "Elements": 
+      [
+        {
+          "Name": "EnEditor",
+          "DisplayName": "English Editor Items",
+          "Type": "bool",
+          "DefaultValue": true,
+          "Description" : 
+          [
+            "Enable if editor captions should be displayed in English."
+          ]
+        }
+      ]
+    }
+  ],
+  "IniFile": "Debug.ini"
+}
