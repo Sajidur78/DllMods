@@ -1,3 +1,6 @@
+# Version 1.1.1
+- Fix configuration not appearing in Hedge Mod Manager.
+
 # Version 1.1
 - Added FxParamEditor.
 
