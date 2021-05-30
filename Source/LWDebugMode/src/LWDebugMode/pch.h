@@ -27,4 +27,7 @@
 #include "Window.h"
 #include "WindowManager.h"
 
+#pragma comment(lib, "lib/detours.lib")
+#pragma comment(lib, "lib/syelog.lib")
+
 #endif //PCH_H

@@ -41,7 +41,7 @@
 
 #define WRITE_MEMORY(location, ...) \
 	{ \
-		const char data[] = { __VA_ARGS__ }; \
+		const uint8_t data[] = { __VA_ARGS__ }; \
 		DWORD oldProtect; \
 		VirtualProtect((void*)location, sizeof(data), PAGE_EXECUTE_READWRITE, &oldProtect); \
 		memcpy((void*)location, data, sizeof(data)); \

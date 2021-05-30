@@ -6,6 +6,7 @@ namespace app::dev
 	{
 	public:
 		bool m_EnEditors{};
+		bool m_SoftwareCursor{ true };
 		
 		Configuration() = default;
 		void Load(const char* pPath = "Debug.ini");

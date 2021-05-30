@@ -34,7 +34,7 @@ namespace app::dbg
 		}
 	};
 	
-	class WindowManager : public fnd::ReferencedObject, csl::fnd::SingletonPointer<WindowManager>
+	class WindowManager : public fnd::ReferencedObject, public csl::fnd::SingletonPointer<WindowManager>
 	{
 		inline static FUNCTION_PTR(gindows::Form*, __thiscall, ms_fpFindWindowByName, ASLR(0x004451E0), const WindowManager* pThis, const char* pName);
 		inline static FUNCTION_PTR(void, __thiscall, gindowsControlSetSize, ASLR(0x0096FFD0), void* pControl, const csl::ut::Size2<int>& size);

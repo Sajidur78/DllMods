@@ -175,6 +175,7 @@
     <ClInclude Include="ImGuiFont.h" />
     <ClInclude Include="ImGuiMouse.h" />
     <ClInclude Include="LWDebugMode.h" />
+    <ClInclude Include="Mod.h" />
     <ClInclude Include="OpenFileDialogWin32.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="SaveFileDialogWin32.h" />
@@ -201,6 +202,7 @@
     <ClCompile Include="ImGuiRenderDevice.cpp" />
     <ClCompile Include="ImGuiFont.cpp" />
     <ClCompile Include="LWDebugMode.cpp" />
+    <ClCompile Include="Mod.cpp" />
     <ClCompile Include="OpenFileDialogWin32.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

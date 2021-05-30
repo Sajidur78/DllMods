@@ -9,7 +9,7 @@ namespace app::imgui
 	using namespace xgame;
 	using namespace std;
 	
-	class WindowManager : public fnd::ReferencedObject, fnd::CLeafActor, csl::fnd::Singleton<WindowManager>
+	class WindowManager : public fnd::ReferencedObject, fnd::CLeafActor, public csl::fnd::Singleton<WindowManager>
 	{
 		static constexpr uint WM_EVENT_INIT = 1;
 

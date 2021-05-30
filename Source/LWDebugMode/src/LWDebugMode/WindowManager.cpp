@@ -5,6 +5,8 @@
 #include <string>
 #include <windowsx.h>
 
+#include "Mod.h"
+
 #pragma once
 #pragma push_macro("SendMessage")
 #undef SendMessage
@@ -106,7 +108,7 @@ namespace app::imgui
 
 		case WM_SETCURSOR:
 		{
-			if (LOWORD(lParam) == HTCLIENT && ::GetActiveWindow() == hWnd)
+			if (LOWORD(lParam) == HTCLIENT && ::GetActiveWindow() == hWnd && Mod::GetInstance()->GetConfig().m_SoftwareCursor)
 			{
 				SetCursor(nullptr);
 				return true;
