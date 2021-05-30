@@ -14,8 +14,13 @@ app::dev::Configuration ms_Config;
 
 static short WINAPI GetAsyncKeyStateHook(int key)
 {
-	if (gindows::Manager::GetInstance() && gindows::Manager::GetInstance()->GetFocusControl() != gindows::Manager::GetInstance()->GetDesktop())
+	auto* pInst = gindows::Manager::GetInstance();
+	if (pInst && pInst->GetFocusControl() != pInst->GetDesktop())
+	{
+		// Call the method because, Windows
+		GetAsyncKeyState(key);
 		return 0;
+	}
 
 	return GetAsyncKeyState(key);
 }

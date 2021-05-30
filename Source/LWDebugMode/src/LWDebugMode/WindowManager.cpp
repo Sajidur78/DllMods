@@ -118,7 +118,8 @@ namespace app::imgui
 		{
 			const csl::ut::Point2<int> point{ GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam) };
 			dbg::WindowManager::MouseMove(point);
-			if (gindows::Manager::GetInstance() && gindows::Manager::GetInstance()->GetMouseOverControl() != gindows::Manager::GetInstance()->GetDesktop())
+			auto* pInst = gindows::Manager::GetInstance();
+			if (pInst && pInst->GetMouseOverControl() != pInst->GetDesktop())
 				return true;
 				
 			break;
@@ -133,6 +134,8 @@ namespace app::imgui
 
 	WindowManager::WindowManager()
 	{
+		// Focus on the desktop first thing
+		gindows::Manager::GetInstance()->GetDesktop()->SetFocus();
 		Singleton<font::FontManager>::GetInstance()->SetDbgFont(&m_MainFont);
 		Singleton<fnd::MessageManager>::GetInstance()->Add(this);
 
