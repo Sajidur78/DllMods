@@ -1,3 +1,7 @@
+# Version 1.1.2
+- Added option to hide software cursor.
+- Fix keyboard inputs not working if not clicked.
+
 # Version 1.1.1
 - Fix configuration not appearing in Hedge Mod Manager.
 

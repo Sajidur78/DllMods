@@ -14,6 +14,17 @@
           [
             "Enable if editor captions should be displayed in English."
           ]
+        },
+        {
+          "Name": "SoftwareCursor",
+          "DisplayName": "Enable Software Cursor",
+          "Type": "bool",
+          "DefaultValue": true,
+          "Description" : 
+          [
+            "Enable if the mod should render a software cursor.",
+            "Cursor position might not line up on windowed mode if disabled."
+          ]
         }
       ]
     }
