@@ -175,6 +175,7 @@
     <ClInclude Include="ImGuiFont.h" />
     <ClInclude Include="ImGuiMouse.h" />
     <ClInclude Include="LWDebugMode.h" />
+    <ClInclude Include="LWDebugModeUtils.h" />
     <ClInclude Include="Mod.h" />
     <ClInclude Include="OpenFileDialogWin32.h" />
     <ClInclude Include="pch.h" />

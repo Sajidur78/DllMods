@@ -2,6 +2,7 @@
 #include "Mod.h"
 #include "DbgWindowManager.h"
 
+using namespace app;
 using namespace app::imgui;
 using namespace csl::fnd;
 
@@ -28,7 +29,7 @@ HOOK(csl::fnd::IAllocator*, __cdecl, GetDebugAllocator, ASLR(0x004438B0))
 HOOK(void, __fastcall, SetupStages, ASLR(0x00913EE0), app::StageInfo::CStageInfo* This)
 {
 	originalSetupStages(This);
-	const auto res = Singleton<app::fnd::ResourceManager>::GetInstance()->Get<app::fnd::ResRawData>("actstgdata.lua");
+	const auto res = Singleton<fnd::ResourceManager>::GetInstance()->Get<fnd::ResRawData>("actstgdata.lua");
 
 	if (res.IsValid())
 	{
@@ -38,6 +39,8 @@ HOOK(void, __fastcall, SetupStages, ASLR(0x00913EE0), app::StageInfo::CStageInfo
 		This->ReadCategoryDebug("stage_all", stgData, 0);
 		This->ReadCategoryDebug("old_stage_all", stgData, 1);
 	}
+
+	Mod::SetupPendingLevels();
 }
 
 HOOK(bool, __fastcall, StateDevMenu, ASLR(0x0090FEF0), app::CGameSequence* This, void* edx, void* a2, void* a3)
@@ -60,6 +63,8 @@ HOOK(void*, __fastcall, GameModeDevMenuCtor, ASLR(0x00914890), void* This)
 
 namespace app
 {
+	std::vector<Mod::LevelInfo> Mod::ms_PendingLevels{};
+	
 	Mod::Mod()
 	{
 		ReplaceInstance(this);
@@ -115,5 +120,73 @@ namespace app
 		{
 			Singleton<WindowManager>::GetInstance()->SeqGoToDevMenu();
 		}
+	}
+
+	void Mod::AddLevelDebug(const char* pWorldName, const char* pLevelTitle, const char* pLevelId)
+	{
+		if (!pWorldName || !pLevelTitle || !pLevelId)
+			return;
+
+		auto* pInst = app::StageInfo::CStageInfo::GetInstance();
+		if (!pInst)
+		{
+			LevelInfo info{};
+			info.m_World = pWorldName;
+			info.m_LevelTitle = pLevelTitle;
+			info.m_LevelId = pLevelId;
+			ms_PendingLevels.push_back(info);
+			return;
+		}
+
+		auto& worlds = pInst->m_Worlds[0];
+		app::StageInfo::WorldNode* pWorld{};
+		for (auto& zone : worlds)
+		{
+			if (!strncmp(zone->GetTitle(), pWorldName, strlen(pWorldName)))
+			{
+				pWorld = zone;
+				break;
+			}
+		}
+
+		if (!pWorld)
+		{
+			pWorld = new(worlds.get_allocator()) app::StageInfo::WorldNode();
+			pWorld->SetTitle(pWorldName);
+			worlds.push_back(pWorld);
+		}
+
+		app::StageInfo::StageNode* pStageData{};
+		for (auto& stage : pWorld->GetStages())
+		{
+			if (!strncmp(stage.m_Name, pLevelId, 16))
+			{
+				pStageData = &stage;
+				pStageData->m_Name = pLevelId;
+				pStageData->m_Title = pLevelTitle;
+				break;
+			}
+		}
+
+		if (!pStageData)
+		{
+			StageInfo::StageNode stageData{};
+			stageData.m_Name = pLevelId;
+			stageData.m_Title = pLevelTitle;
+			pWorld->AddNode(stageData);
+		}
+	}
+
+	void Mod::SetupPendingLevels()
+	{
+		if (!StageInfo::CStageInfo::GetInstance())
+			return;
+		
+		for (auto& level : ms_PendingLevels)
+		{
+			AddLevelDebug(level.m_World.c_str(), level.m_LevelTitle.c_str(), level.m_LevelId.c_str());
+		}
+		
+		ms_PendingLevels.clear();
 	}
 }
