@@ -39,14 +39,22 @@
 		} \
 	}
 
-#define WRITE_MEMORY(location, ...) \
+#define WRITE_CALL(location, FUNC) \
+    { \
+        WRITE_MEMORY_TYPE(location, uint8_t, 0xE8); \
+        WRITE_MEMORY_TYPE((location + 1), size_t, (size_t)((void*)(FUNC)) - (size_t)(location) - 5); \
+    }
+
+#define WRITE_MEMORY_TYPE(location, TYPE, ...) \
 	{ \
-		const uint8_t data[] = { __VA_ARGS__ }; \
+		const TYPE data[] = { __VA_ARGS__ }; \
 		DWORD oldProtect; \
 		VirtualProtect((void*)location, sizeof(data), PAGE_EXECUTE_READWRITE, &oldProtect); \
 		memcpy((void*)location, data, sizeof(data)); \
 		VirtualProtect((void*)location, sizeof(data), oldProtect, NULL); \
 	}
+
+#define WRITE_MEMORY(location, ...) WRITE_MEMORY_TYPE(location, uint8_t, __VA_ARGS__)
 
 #define WRITE_FUNCTION(location, func)\
 	{ \

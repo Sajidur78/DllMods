@@ -7,6 +7,7 @@ namespace app::dev
 	public:
 		bool m_EnEditors{};
 		bool m_SoftwareCursor{ true };
+		size_t m_FreeCamController{};
 		
 		Configuration() = default;
 		void Load(const char* pPath = "Debug.ini");

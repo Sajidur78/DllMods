@@ -11,5 +11,6 @@ namespace app::dev
 
 		m_EnEditors = reader.GetBoolean("Main", "EnEditor", false);
 		m_SoftwareCursor = reader.GetBoolean("Main", "SoftwareCursor", true);
+		m_FreeCamController = reader.GetInteger("FreeCam", "ControllerIndex", 0);
 	}
 }

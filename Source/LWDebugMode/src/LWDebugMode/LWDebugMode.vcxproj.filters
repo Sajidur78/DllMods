@@ -84,6 +84,24 @@
     <ClInclude Include="LWDebugModeUtils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CameraControllerFreeCam.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Im3d.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="im3d_config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="im3d_math.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="im3d_directx9.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FreeCameraService.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -160,6 +178,18 @@
     </ClCompile>
     <ClCompile Include="..\depends\imgui\imgui_widgets.cpp">
       <Filter>Source Files\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraControllerFreeCam.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="im3d.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="im3d_directx9.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FreeCameraService.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -5,6 +5,7 @@
 #include <string>
 #include <windowsx.h>
 
+#include "CameraControllerFreeCam.h"
 #include "Mod.h"
 
 #pragma once
@@ -44,6 +45,7 @@ namespace app::imgui
 	{
 		ImGui_ImplDX9_Shutdown();
 		ImGui_ImplWin32_Shutdown();
+		Im3d_Shutdown();
 		delete static_cast<BaseObject*>(instance);
 	}
 
@@ -99,7 +101,7 @@ namespace app::imgui
 			dbg::WindowManager::MouseUp(2);
 			break;
 		}
-
+			
 		case WM_MOUSEWHEEL:
 		{
 			dbg::WindowManager::MouseWheel(GET_WHEEL_DELTA_WPARAM(wParam) / WHEEL_DELTA);
@@ -170,6 +172,7 @@ namespace app::imgui
 		ImGui::CreateContext();
 		ImGui_ImplDX9_Init(app->GetDirect3DDevice());
 		ImGui_ImplWin32_Init(reinterpret_cast<void*>(app->GetWindowHandle()));
+		Im3d_Init(app->GetDirect3DDevice(), reinterpret_cast<HWND>(app->GetWindowHandle()));
 
 		ImGuiIO& io = ImGui::GetIO();
 		//io.MouseDrawCursor = true;
@@ -192,10 +195,13 @@ namespace app::imgui
 		if (!m_initialized)
 			return;
 
+		auto* pRenderMan = Singleton<gfx::RenderManager>::GetInstance();
+		auto& cameraParam = pRenderMan->GetCameraParam(0);
+		Im3d_SetViewMatrix(*reinterpret_cast<const Im3d::Mat4*>(&cameraParam.m_ViewMtx));
+		
 		ImGui_ImplDX9_NewFrame();
 		ImGui_ImplWin32_NewFrame();
 		ImGui::NewFrame();
-
 		dbg::WindowManager::Render();
 		
 		for (auto& window : m_windows)
@@ -209,9 +215,8 @@ namespace app::imgui
 				ImGui::End();
 			}
 		}
-
-		Singleton<font::FontManager>::GetInstance()->DbgDraw();
 		
+		Singleton<font::FontManager>::GetInstance()->DbgDraw();
 		ImGui::EndFrame();
 		ImGui::Render();
 		ImGui_ImplDX9_RenderDrawData(ImGui::GetDrawData());

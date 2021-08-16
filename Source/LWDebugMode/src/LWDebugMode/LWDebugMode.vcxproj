@@ -161,12 +161,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CameraControllerFreeCam.h" />
     <ClInclude Include="CommonDialog.h" />
     <ClInclude Include="CommonFileDialogWin32.h" />
     <ClInclude Include="Configuration.h" />
     <ClInclude Include="DbgWindowManager.h" />
     <ClInclude Include="DevConfigEditWindow.h" />
     <ClInclude Include="DummyDevice.h" />
+    <ClInclude Include="FreeCameraService.h" />
+    <ClInclude Include="Im3d.h" />
+    <ClInclude Include="im3d_config.h" />
+    <ClInclude Include="im3d_directx9.h" />
+    <ClInclude Include="im3d_math.h" />
     <ClInclude Include="ImGuiDeviceFont.h" />
     <ClInclude Include="ImGuiRenderDevice.h" />
     <ClInclude Include="framework.h" />
@@ -192,12 +198,16 @@
     <ClCompile Include="..\depends\imgui\imgui_draw.cpp" />
     <ClCompile Include="..\depends\imgui\imgui_tables.cpp" />
     <ClCompile Include="..\depends\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="CameraControllerFreeCam.cpp" />
     <ClCompile Include="CommonFileDialogWin32.cpp" />
     <ClCompile Include="Configuration.cpp" />
     <ClCompile Include="DbgWindowManager.cpp" />
     <ClCompile Include="DevConfigEditWindow.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="DummyDevice.cpp" />
+    <ClCompile Include="FreeCameraService.cpp" />
+    <ClCompile Include="im3d.cpp" />
+    <ClCompile Include="im3d_directx9.cpp" />
     <ClCompile Include="ImGuiDeviceFont.cpp" />
     <ClCompile Include="ImGuiMouse.cpp" />
     <ClCompile Include="ImGuiRenderDevice.cpp" />

@@ -16,6 +16,9 @@
 #include <imgui_impl_dx9.h>
 #include <imgui_impl_win32.h>
 
+#include "Im3d.h"
+#include "im3d_directx9.h"
+
 #include <string>
 #include <list>
 

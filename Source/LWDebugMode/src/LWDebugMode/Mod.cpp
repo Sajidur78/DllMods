@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Mod.h"
 #include "DbgWindowManager.h"
+#include "FreeCameraService.h"
 
 using namespace app;
 using namespace app::imgui;
@@ -24,6 +25,14 @@ static short WINAPI GetAsyncKeyStateHook(int key)
 HOOK(csl::fnd::IAllocator*, __cdecl, GetDebugAllocator, ASLR(0x004438B0))
 {
 	return app::fnd::GetSingletonAllocator();
+}
+
+HOOK(void, __fastcall, WorldMapSetupCamera, ASLR(0x0093EBD0), void* pThis)
+{
+	originalWorldMapSetupCamera(pThis);
+
+	if (dev::FreeCameraService::GetInstance())
+		dev::FreeCameraService::GetInstance()->LevelStarted();
 }
 
 HOOK(void, __fastcall, SetupStages, ASLR(0x00913EE0), app::StageInfo::CStageInfo* This)
@@ -95,16 +104,21 @@ namespace app
 		// Fix load test crashes
 		WRITE_MEMORY(ASLR(0x0092AAA6), 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90)
 		WRITE_MEMORY(ASLR(0x0092AAF6), 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90)
-
+		// WRITE_MEMORY(ASLR(0x00418B2C), 12)
+		
 		WRITE_FUNCTION(ASLR(0x00D52234), &GetAsyncKeyStateHook)
 		INSTALL_HOOK(GetDebugAllocator)
 		INSTALL_HOOK(SetupStages)
 		INSTALL_HOOK(StateDevMenu)
 		INSTALL_HOOK(GameModeDevMenuCtor)
+		INSTALL_HOOK(WorldMapSetupCamera)
 	}
 
 	void Mod::OnFrame()
 	{
+		if (GameDocument::GetSingleton())
+			dev::FreeCameraService::SetupService(*GameDocument::GetSingleton());
+		
 		WindowManager::GetInstance()->Render();
 		auto* devMan = Singleton <hid::DeviceManager>::GetInstance();
 

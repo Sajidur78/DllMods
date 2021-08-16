@@ -26,6 +26,7 @@ namespace app::imgui
 		font::ImGuiFont m_MainFont{};
 
 	public:
+		int m_MouseWheel{};
 		inline static LONG_PTR WndProcOriginal;
 
 		WindowManager();
