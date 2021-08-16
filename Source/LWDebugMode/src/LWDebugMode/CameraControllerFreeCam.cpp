@@ -157,11 +157,7 @@ namespace app::dev
 			m_LookAxis[2] -= ImGui::GetIO().MouseWheel * m_Speed;
 		
 		m_WarpPlayer = pData->m_PadData.IsButtonDown(hid::BUTTON_L3);
-		if (pData->m_PadData.IsButtonDown(hid::BUTTON_START))
-			SetPause(false);
-		else if (pData->m_PadData.IsButtonUp(hid::BUTTON_START))
-			SetPause(true);
-
+		SetPause(!pData->m_PadData.IsButtonHeld(hid::BUTTON_START) && !GetAsyncKeyState(VK_RETURN));
 		m_LastTouchPos = curCursor;
 	}
 

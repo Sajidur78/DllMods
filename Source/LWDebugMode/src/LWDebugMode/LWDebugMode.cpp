@@ -13,7 +13,6 @@ extern "C" __declspec(dllexport) void Init()
 {
 	char pathBuf[MAX_PATH];
 	GetCurrentDirectoryA(sizeof(pathBuf), pathBuf);
-	freopen("$CONOUT", "w", stdout);
 
 	ms_Mod.Initialize(pathBuf);
 	ms_Mod.ApplyPatches();
