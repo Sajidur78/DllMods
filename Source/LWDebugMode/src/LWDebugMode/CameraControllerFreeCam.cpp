@@ -146,7 +146,7 @@ namespace app::dev
 		{
 			const POINT cursorDelta{ curCursor.x - m_LastTouchPos.x, curCursor.y - m_LastTouchPos.y };
 			m_LookAxis[0] += static_cast<float>(cursorDelta.x) * 0.08f;
-			m_LookAxis[1] += static_cast<float>(cursorDelta.y) * 0.08f;
+			m_LookAxis[1] -= static_cast<float>(cursorDelta.y) * 0.08f;
 		}
 		
 		if (!pData->m_PadData.IsButtonHeld(hid::BUTTON_R2))
