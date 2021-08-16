@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CameraControllerFreeCam.h"
 #include "FreeCameraService.h"
+#include "Mod.h"
 
 using namespace csl::math;
 #undef SendMessage
@@ -16,6 +17,7 @@ namespace app::dev
 	
 	CameraControllerFreeCam::CameraControllerFreeCam()
 	{
+		m_Controller = Mod::GetInstance()->GetConfig().m_FreeCamController;
 		ms_pInstance = this;
 		GetCursorPos(&m_LastTouchPos);
 		SetDebugCamera(true);

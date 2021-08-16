@@ -23,7 +23,28 @@
           "Description" : 
           [
             "Enable if the mod should render a software cursor.",
-            "Cursor position might not line up on windowed mode if disabled."
+            "Cursor position might not line up on windowed mode."
+          ]
+        }
+      ]
+    },
+    {
+      "Name":"FreeCam",
+      "DisplayName": "Free Camera",
+      "Elements":
+      [
+        {
+          "Name": "ControllerIndex",
+          "DisplayName": "Controller Index",
+          "Type": "int",
+          "DefaultValue": 0,
+          "Description":
+          [
+            "0 based index of which controller to use.",
+            "0 - 1st Controller",
+            "1 - 2nd Controller",
+            "2 - 3rd Controller",
+            "3 - 4th Controller"
           ]
         }
       ]
