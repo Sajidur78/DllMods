@@ -23,7 +23,7 @@ namespace app::dev
 		bool ProcessMessage(fnd::Message& msg) override;
 		void ResolveAccessibleService(GameDocument& document) override;
 		void LevelStarted();
-		void UpdateFinal(fnd::SUpdateInfo& info) override;
+		void UpdateFinal(const fnd::SUpdateInfo& info) override;
 
 		void SetPlayerPosition(const csl::math::Vector3& rPos) const;
 		static void SetupService(GameDocument& rDoc);

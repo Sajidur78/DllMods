@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "FreeCameraService.h"
 #include "CameraControllerFreeCam.h"
+#include "Mod.h"
 #undef CreateService
 #undef SendMessage
 
@@ -68,18 +69,12 @@ namespace app::dev
 	}
 
 	// Update can get hit twice because we exist in 2 groups
-	void FreeCameraService::UpdateFinal(fnd::SUpdateInfo& info)
+	void FreeCameraService::UpdateFinal(const fnd::SUpdateInfo& info)
 	{
 		if (info.frame == m_LastFrame)
 			return;
 
 		m_LastFrame = info.frame;
-		
-		if (CameraControllerFreeCam::GetInstance())
-		{
-			xgame::MsgCameraUpdate updateCam(info.deltaTime);
-			SendMessageImm(m_CameraActor, updateCam);
-		}
 
 		auto* devMan = Singleton <hid::DeviceManager>::GetInstance();
 		auto* data = devMan->GetDeviceData(0, 0);

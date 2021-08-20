@@ -11,6 +11,8 @@ namespace app::dev
 
 		m_EnEditors = reader.GetBoolean("Main", "EnEditor", false);
 		m_SoftwareCursor = reader.GetBoolean("Main", "SoftwareCursor", true);
-		m_FreeCamController = reader.GetInteger("FreeCam", "ControllerIndex", 0);
+		m_FreeCam.m_Controller = reader.GetInteger("FreeCam", "ControllerIndex", 0);
+		m_FreeCam.m_UseFixedYawAxis = reader.GetInteger("FreeCam", "UseFixedYawAxis", false);
+		m_FreeCam.m_SpeedAdjustRatio = reader.GetFloat("FreeCam", "SpeedAdjustRatio", m_FreeCam.m_SpeedAdjustRatio);
 	}
 }

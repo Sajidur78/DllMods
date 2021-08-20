@@ -194,10 +194,6 @@ namespace app::imgui
 	{
 		if (!m_initialized)
 			return;
-
-		auto* pRenderMan = Singleton<gfx::RenderManager>::GetInstance();
-		auto& cameraParam = pRenderMan->GetCameraParam(0);
-		Im3d_SetViewMatrix(*reinterpret_cast<const Im3d::Mat4*>(&cameraParam.m_ViewMtx));
 		
 		ImGui_ImplDX9_NewFrame();
 		ImGui_ImplWin32_NewFrame();

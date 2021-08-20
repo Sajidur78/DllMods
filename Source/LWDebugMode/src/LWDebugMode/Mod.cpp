@@ -70,9 +70,47 @@ HOOK(void*, __fastcall, GameModeDevMenuCtor, ASLR(0x00914890), void* This)
 	return originalGameModeDevMenuCtor(This);
 }
 
+const uint ms_PausedUpdateFlags{ csl::ut::Bitset<uint>{OBJECT_CATEGORY_SERVER, OBJECT_CATEGORY_DEBUG, OBJECT_CATEGORY_CAMERA} };
+
+HOOK(void, __fastcall, StandardGameUpdate, ASLR(0x00926080), void* pThis, void* edx, uint* pInput, const app::fnd::SUpdateInfo& info)
+{
+	csl::ut::Bitset<int> bits{0, 1, 2};
+	
+	if (Mod::ms_OverrideUpdateFlow)
+	{
+		pInput[0] = Mod::ms_UpdateFlags;
+		if (Mod::ms_DisablePhysicsFlow)
+			pInput[1] = 0x00190100;
+		else
+			pInput[1] = 0x00190001;
+	}
+
+	if (Mod::ms_PauseGame)
+	{
+		pInput[0] = ms_PausedUpdateFlags;
+		pInput[1] = 0x00190100;
+	}
+
+	pInput[0] |= Mod::ms_OverlapUpdateFlags;
+	originalStandardGameUpdate(pThis, edx, pInput, info);
+}
+
 namespace app
 {
 	std::vector<Mod::LevelInfo> Mod::ms_PendingLevels{};
+	bool Mod::ms_PauseGame{};
+	bool Mod::ms_OverrideUpdateFlow{};
+	bool Mod::ms_DisablePhysicsFlow{};
+	csl::ut::Bitset<uint> Mod::ms_OverlapUpdateFlags{};
+	csl::ut::Bitset<uint> Mod::ms_UpdateFlags
+	{
+		1 << OBJECT_CATEGORY_SERVER |
+		1 << OBJECT_CATEGORY_NONSTOP |
+		1 << OBJECT_CATEGORY_CAMERA |
+		1 << OBJECT_CATEGORY_HUD |
+		1 << OBJECT_CATEGORY_HUD_NONSTOP |
+		1 << OBJECT_CATEGORY_DEBUG
+	};
 	
 	Mod::Mod()
 	{
@@ -112,6 +150,7 @@ namespace app
 		INSTALL_HOOK(StateDevMenu)
 		INSTALL_HOOK(GameModeDevMenuCtor)
 		INSTALL_HOOK(WorldMapSetupCamera)
+		INSTALL_HOOK(StandardGameUpdate)
 	}
 
 	void Mod::OnFrame()

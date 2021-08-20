@@ -24,6 +24,8 @@ The free camera allows the in-game camera to be easily manipulated.
         - Mission button (Controller: L3, Keyboard default: Tab)
 
 - Look around:
+    - Reset:
+        - Briefcase button (Controller: R3, Mouse: Middle click)
     - Yaw and Pitch:
         - The yaw and pitch of the camera can be controlled using the right stick. Or, with the mouse while holding left click.
     - Roll:
@@ -32,10 +34,13 @@ The free camera allows the in-game camera to be easily manipulated.
         - Keyboard:
             - Scroll wheel while holding the run button.
     - Field Of View (FOV):
-        - Controller:
-            - Up-Down D-Pad buttons.
-        - Keyboard:
-            - Scroll wheel.
+        - Adjust:
+            - Controller:
+                - Up-Down D-Pad buttons.
+            - Keyboard:
+                - Scroll wheel.
+        - Reset:
+            - Duck button 2 (Controller: Y, Mouse: Run + Middle click)
 
 - Height Adjustment:
     - Ascend:
@@ -43,14 +48,29 @@ The free camera allows the in-game camera to be easily manipulated.
     - Descend:
         - Super Sonic button (Controller: L2, Keyboard default: S)
 
+<br/>
+
 - Speed Adjustment:
-    - Speed Up:
-        - Run button (Controller: L2, Keyboard default: Right control)
-    - Slow Down:
-        - Spindash button (Controller: R2, Keyboard default: Left control)
+    - Speed Up Trigger:
+        - Run button (Controller: R2, Keyboard default: Right control)
+    - Slow Down Trigger:
+        - Spindash button (Controller: L2, Keyboard default: Left control)
+
+    - Increment Speed:
+        - Jump button (Controller: A, Mouse: Run + Scroll)
+
+    - Decrement Speed:
+        - Jump button 2 (Controller: B, Mouse: Run + Scroll)
+
+    - Reset Speed:
+        - Duck button (Controller: X, Keyboard default: X)
+
+<br/>
 
 - Teleporting Player:
     - Mission button (Controller: L3, Keyboard default: Tab)
+
+<br/>
 
 - Un-freezing World:
     - Controller:

@@ -18,6 +18,11 @@ namespace app
 		std::string m_Dir;
 		
 	public:
+		static bool ms_PauseGame;
+		static bool ms_OverrideUpdateFlow;
+		static bool ms_DisablePhysicsFlow;
+		static csl::ut::Bitset<uint> ms_OverlapUpdateFlags;
+		static csl::ut::Bitset<uint> ms_UpdateFlags;
 		Mod();
 		Mod(const char* pDir);
 

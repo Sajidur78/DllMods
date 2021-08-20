@@ -1,4 +1,7 @@
 #pragma once
+#define FREECAM_DEFAULT_FOV 45.0f
+#define FREECAM_DEFAULT_SPEED 2.5f
+#define FREECAM_DEFAULT_SPEED_ADJUST_RATIO 0.25f
 
 namespace app::dev
 {
@@ -10,11 +13,15 @@ namespace app::dev
 		csl::math::Vector3 m_LookAxis{};
 		float m_FovAdjust{};
 		bool m_WarpPlayer{};
+		bool m_ResetRotation{};
 		POINT m_LastTouchPos{};
 	
 	public:
 		size_t m_Controller{};
-		float m_Speed{ 2.5f };
+		float m_Speed{ FREECAM_DEFAULT_SPEED };
+		float m_SpeedAdjustRatio{ FREECAM_DEFAULT_SPEED_ADJUST_RATIO };
+		bool m_UseFixedYaw{ false };
+		
 		CameraControllerFreeCam();
 		~CameraControllerFreeCam() override;
 		
