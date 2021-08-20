@@ -18,6 +18,7 @@ namespace app::dev
 	{
 		instance = this;
 		SetUpdateFlag(2, true);
+		m_Controller = Mod::GetInstance()->GetConfig().m_FreeCam.m_Controller;
 	}
 
 	FreeCameraService::~FreeCameraService()
@@ -77,7 +78,7 @@ namespace app::dev
 		m_LastFrame = info.frame;
 
 		auto* devMan = Singleton <hid::DeviceManager>::GetInstance();
-		auto* data = devMan->GetDeviceData(0, 0);
+		auto* data = devMan->GetDeviceData(m_Controller, 0);
 		if (data->m_PadData.IsButtonDown(m_ActivateButton))
 			CameraControllerFreeCam::ToggleCamera(*m_pOwnerDocument, m_CameraActor);
 	}

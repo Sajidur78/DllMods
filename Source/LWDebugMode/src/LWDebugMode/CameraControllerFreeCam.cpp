@@ -171,7 +171,7 @@ namespace app::dev
 		POINT curCursor{};
 		GetCursorPos(&curCursor);
 
-		if (!pData->m_TouchData.m_IsBackground)
+		if (!devMan->GetDeviceData(0, 0)->m_TouchData.m_IsBackground)
 		{
 			if (pData->m_TouchData.m_HeldStates & hid::TOUCH_PRIMARY)
 			{

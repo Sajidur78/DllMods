@@ -17,6 +17,7 @@ namespace app::dev
 		hid::ButtonStates m_ActivateButton{};
 	
 	public:
+		size_t m_Controller{};
 		FreeCameraService();
 		~FreeCameraService() override;
 		void OnAddedToGame() override;
