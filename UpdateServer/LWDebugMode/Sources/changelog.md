@@ -1,3 +1,9 @@
+# Version 1.2.1
+
+### Free Camera
+- Fix not being able to unpause when not using the first controller.
+- Use activation button always being on first controller.
+
 # Version 1.2
 - Added free camera.
 
